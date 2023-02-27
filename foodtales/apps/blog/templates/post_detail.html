@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+ <section class="single-blog-page-wrap padding-top-80 padding-bottom-50">
+            <div class="container">
+                <div class="row gutters-60">
+                    <div class="col-lg-8">
+                        <div class="single-blog-box">
+                            <div class="main-figure">
+                                <a href="single-blog.html"><img src="{{object.image.url}}" alt="Blog"></a>
+                            </div>
+                            <div class="blog-content">
+                                <ul class="entry-meta">
+                                    <li><a href="#"><i class="fas fa-clock"></i>{{object.created}}</a></li>
+                                    <li><a href="#"><i class="fas fa-user"></i>by <span>{{object.author.username}}</span></a></li>
+                                    <li><a href="#"><i class="fas fa-comments"></i>Comments <span>(03)</span></a></li>
+                                    <li><a href="#"><i class="fas fa-heart"></i><span>59</span></a></li>
+                                </ul>
+                                <h3 class="item-title">{{object.title}}</h3>
+                                <p class="item-details">{{object.description|safe}}</p>
+
+                            </div>
+                            <div class="tag-share">
+                                <ul>
+                                    <li>
+                                        <ul class="inner-tag">
+                                            {% for tag in object.tags.all  %}
+                                            <li>
+                                                <a href="#">{{tag.name }}</a>
+                                            </li>
+                                     {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="inner-share">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-google-plus-g"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fab fa-pinterest"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="recipe-author">
+                                <div class="media media-none--xs">
+                                    <img src="img/blog/author9.jpg" alt="Blog Author" class="rounded-circle media-img-auto">
+                                    <div class="media-body">
+                                        <h4 class="author-title">Michel Jack</h4>
+                                        <h5 class="author-sub-title">Written by</h5>
+                                        <p>I love cooking and blogging. Using a fork, break salmon. Halve reserved
+                                            potatoes and eggs crosswise. The of something of did require met of
+                                            help have someone.</p>
+                                        <ul class="author-social">
+                                            <li>
+                                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fab fa-skype"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-prev-post">
+                                <div class="prev-post">
+                                    <a href="#" class="item-figure"><img src="img/blog/prev-post.jpg" alt="Post"></a>
+                                    <div class="item-content">
+                                        <p>PREVIOUS POST</p>
+                                        <h3 class="post-title"><a href="#">Old school pancake next area so goody</a></h3>
+                                    </div>
+                                </div>
+                                <div class="next-post">
+                                    <div class="item-content">
+                                        <p>NEXT POST</p>
+                                        <h3 class="post-title"><a href="#">Old school pancake next area so goody</a></h3>
+                                    </div>
+                                    <a href="#" class="item-figure"><img src="img/blog/next-post.jpg" alt="Post"></a>
+                                </div>
+                            </div>
+                            <div class="recipe-reviews">
+                                <div class="section-heading3 heading-dark">
+                                    <h2 class="item-heading">КОММЕНТАРИИ</h2>
+                                </div>
+                                <ul>
+                                    {% for comment in object.comments.all%}
+                                    <li class="reviews-single-item">
+                                        <div class="media media-none--xs">
+                                      
+                                            <div class="media-body">
+                                                <h4 class="comment-title">{{comment.author.email}}</h4>
+                                                <span class="post-date">{{comment.created}}</span>
+                                                <p>{{comment.text}}</p>
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                   
+                                </ul>
+                            </div>
+                            <div class="leave-review">
+                                <div class="section-heading3 heading-dark">
+                                    <h2 class="item-heading">оставить комментаий</h2>
+                                </div>
+            <form action="{% url 'create_comment' object.id%}" class="leave-form-box" method="post">
+
+                {% csrf_token %}
+                {{comment_form}}
+                <button class="btn btn-info" type="submit">отправить</button>
+            </form>
+                            </div>
+                        </div>
+                    </div>
+             {% include 'includes/left_side_bar.html' %}
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
